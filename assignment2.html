@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        COINMAP HTML WEB ASSIGNMENT 2
+    </title>
+    <!-- ICON -->
+     <link rel="shortcut icon" href="ICON.PNG" type="image/x-icon" />
+    <!-- STYLE -- CSS -->
+    <style>
+        body{
+            background-image: url(https://cdn.pixabay.com/photo/2018/04/18/14/01/blockchain-3330531_960_720.jpg);
+            
+        }
+        th, td{
+            border: 2px solid black;
+            padding: 20px;
+            text-align: center;
+            border-style:ridge;
+        }
+        th{
+            font-size: 20px;
+            font-weight: bolder;
+        }
+        td,th{
+            background-color: lavender;
+        }
+        table{
+            box-shadow: 2px 3px black;
+            background-color: white;
+        }
+        table,td,th{
+            
+            font-family: georgia;
+            border: 1px solid black;
+            border-radius: 2px ;
+            
+        }
+        select{
+            padding: 10px;
+            box-shadow: 2px 3px black;
+            background-color: lavender;
+        }
+        h1{
+            
+            font-family: georgia;
+            background-color: lavender;
+            padding: 4px;
+            box-shadow: 2px 3px black; 
+        }
+        table, select{
+            margin-left: 25%;
+            margin-right: 25%;
+        }
+    
+        
+    </style>
+</head>
+    <!-- BODY BEGINS -->
+<body>
+    <!-- LOGO -->
+    <img id="img" src="logoWEB2.png">
+    <br>
+    <h1>Select Crypto Currencies</h1>
+    <!-- LIST FOR SELECTION -->
+    <div ng-app="coinApp" ng-controller="coinController" >
+    <select ng-model="name">
+    <option ng-repeat="c in coinData" value={{c.name}}>{{c.name}}</option>
+    </select>
+        
+      <br>
+        <br>
+        
+    <!-- TABLE TO DISPLAY DATA -->
+    <table>
+        <th>
+        ID
+        </th>
+        <th>
+        Names
+        </th>
+        <th>
+        Symbols
+        </th>
+        <th>
+        Website_Slug
+        </th>  
+        <tr ng-repeat="c in coinData | filter: name ">
+        <td >
+        {{ c.id }}
+        </td>
+        <td >
+        {{ c.name }}
+        </td>
+        <td>
+        {{ c.symbol }}
+        </td>
+        <td>
+        {{ c.website_slug }}
+        </td>    
+        </tr> 
+    </table>
+    </div>
+    <!-- LINK TO SCRIPT -->
+    <script  src="angularjs-1.7.5.js" ></script>
+    
+    <script>
+        // ANGULARJS MODULE 
+        var coinApp = angular.module('coinApp',[]);
+        // using SERVICES $http 
+        coinApp.controller('coinController', function($scope, $http){
+            
+            $http.get("https://api.coinmarketcap.com/v2/listings/").then(function(response){
+                
+                $scope.coinData = response.data.data;
+            });
+        });
+    </script>
+    
+</body>
+    
+    <!-- BODY ENDS -->
+</html>
+<!-- HTML ENDS -->
